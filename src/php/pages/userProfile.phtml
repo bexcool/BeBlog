@@ -1,0 +1,14 @@
+<fluent-page <?php echo "header='{$user["username"]}'"?>>
+    <?php $index = -1; ?>
+    <script type="text/javascript" src="../../js/article.js"></script>
+    <script type="text/javascript">let contentHTML;</script>
+    <?php echo "<h4>Created</h4><p>{$_SESSION["user"]["creationDate"]}</p>" ?>
+    <h3>Articles</h3>
+    <?php foreach (loadArticlesFromUser($db, $user["ID"]) as $article) {
+        $index++;
+        require("../controls/articleControl.php");
+    } 
+    if ($index == -1) { ?>
+        <p>There are currently no articles. <?php if (isset($_SESSION["user"])) { ?> <fluent-hyperlink href="./createArticle.php">Try to contribute and write one!</fluent-hyperlink> <?php } ?> </p>
+    <?php } ?>
+</fluent-page>
