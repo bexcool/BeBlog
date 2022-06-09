@@ -15,6 +15,22 @@ function loadLastArticles($db, $amount) {
     return $articles;
 }
 
+function loadArticle($db, $ID) {
+    $query = 
+    "   SELECT *
+        FROM articles
+        WHERE id = $ID
+    ";
+
+    $result = mysqli_query($db, $query);
+
+    if ($result) {
+        $article = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
+    }
+    
+    return $article;
+}
+
 function loadArticlesFromUser($db, $userID) {
     $query = 
     "   SELECT *
@@ -38,6 +54,15 @@ function createArticle($db, $article) {
         (userID, title, content)
         VALUES
         ('{$_SESSION["user"]["ID"]}', '{$article["title"]}', '{$article["content"]}')
+    ";
+
+    mysqli_query($db, $query);
+}
+
+function removeArticle($db, $ID) {
+    $query = 
+    "   DELETE FROM articles
+        WHERE id = $ID
     ";
 
     mysqli_query($db, $query);

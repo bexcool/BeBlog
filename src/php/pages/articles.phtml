@@ -2,9 +2,11 @@
     <?php $index = -1; ?>
     <script type="text/javascript" src="../../js/article.js"></script>
     <script type="text/javascript">document.querySelector("#menu-item-articles").setAttribute("selected", ""); let contentHTML;</script>
+    <!--<button onclick="printArticle(1);">Print</button>
+    <div id="articles"></div>-->
     <?php foreach (loadLastArticles($db, 10) as $article) { 
         $index++;
-        require("../controls/articleControl.php");
+        require("../controls/articleControl.phtml");
     } 
     if ($index == -1) { ?>
         <p>There are currently no articles. <?php if (isset($_SESSION["user"])) { ?> <fluent-hyperlink href="./createArticle.php">Try to contribute and write one!</fluent-hyperlink> <?php } ?> </p>

@@ -4,7 +4,7 @@
     <script type="text/javascript">document.querySelector("#menu-item-my-articles").setAttribute("selected", "");</script>
     <?php foreach (loadArticlesFromUser($db, $_SESSION["user"]["ID"]) as $article) {
         $index++;
-        require("../controls/articleControl.php");
+        require("../controls/articleControl.phtml");
     } 
     if ($index == -1) { ?>
         <p>There are currently no articles. <?php if (isset($_SESSION["user"])) { ?> <fluent-hyperlink href="./createArticle.php">Try to contribute and write one!</fluent-hyperlink> <?php } ?> </p>

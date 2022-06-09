@@ -14,3 +14,36 @@ function likeArticle(ID) {
         }
     });
 }
+
+// Get specified amount of articles
+function printArticle(ID) {
+    $.post("../requests/articleRequest.php", {
+        articleID: ID
+    }, function (data) {
+        data = data.slice(0, -1);
+        console.log(data);
+        document.getElementById("articles").outerHTML = data;
+    });
+}
+
+function prepareContentForArticle(ID, content) {
+    // Add article's content
+    document.getElementById(`content${ID}`).innerHTML = marked.parse(content);
+    // Make compatible with Fluent
+    contentHTML = document.getElementById(`content${ID}`).innerHTML;
+    contentHTML = contentHTML.replace(/<a href="(.*?)">(.*?)<\/a>/g, '<fluent-hyperlink href="$1" target="_blank">$2</fluent-hyperlink>');
+    
+    document.getElementById(`content${ID}`).innerHTML = contentHTML;
+}
+
+function removeArticle(ID) {
+    $.post("../requests/articleRemoveRequest.php", {
+        articleID: ID
+    }, function (data) {
+        console.log(data);
+        if (data == true) {
+            console.log("Article removed");
+            document.getElementById(`content${ID}`).parentElement.remove();
+        }
+    });
+}
