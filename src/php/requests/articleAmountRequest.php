@@ -5,10 +5,10 @@
     require("../helpers/accountHelper.php");
     require("../helpers/articleHelper.php");
 
-    $article = loadArticle($db, $_POST["articleID"]);
+    $articles = loadAllArticles($db);
     
-    if ($article != null) {
-        echo require("../controls/articleControl.phtml");
+    if ($articles != null) {
+        echo count($articles);
     }
 
     exit;

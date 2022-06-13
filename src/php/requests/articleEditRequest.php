@@ -5,11 +5,11 @@
     require("../helpers/accountHelper.php");
     require("../helpers/articleHelper.php");
 
-    $article = loadArticle($db, $_POST["articleID"]);
-    
-    if ($article != null) {
-        echo require("../controls/articleControl.phtml");
-    }
+    $article["id"] = $_POST["articleID"];
+    $article["title"] = $_POST["title"];
+    $article["content"] = $_POST["content"];
+
+    editArticle($db, $article);
 
     exit;
 ?>

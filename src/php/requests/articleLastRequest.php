@@ -5,11 +5,9 @@
     require("../helpers/accountHelper.php");
     require("../helpers/articleHelper.php");
 
-    $article = loadArticle($db, $_POST["articleID"]);
-    
-    if ($article != null) {
-        echo require("../controls/articleControl.phtml");
-    }
+    $articles = loadLastArticles($db, $_POST["amount"], $_POST["offset"]);
+
+    echo json_encode($articles);
 
     exit;
 ?>

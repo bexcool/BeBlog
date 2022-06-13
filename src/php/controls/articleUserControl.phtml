@@ -1,0 +1,26 @@
+<fluent-border style="max-width: 100%; margin-right: 5em; padding-left: 2em; padding-top: 0;">
+    <div style="display: inline;">
+        <h2><?php echo $article['title']; ?></h2>
+        <fluent-label><?php echo date("G:i d.m.Y", strtotime($article["creationDate"])); ?></fluent-label><fluent-hyperlink style="margin-left: 1em;" <?="href='./userProfile.php?user={$article["userID"]}'"?>><?php echo findAccountByID($db, $article["userID"])["username"]; ?></fluent-hyperlink>
+        <a class="fluent-hyperlink" style="padding: 0.1em 1.5em 0 0; margin-left: 5em;" <?php if (isset($_SESSION["user"])) { ?>onclick="likeArticle('<?php echo $article['ID']?>')"<?php } ?>><img class="fluent-icon" style="position: absolute; margin-top: 2px;" src="https://cdn.spej.eu/fwf/icons/<?php if (isset($_SESSION["user"])) echo (getArticleUserLikes($db, $article["ID"], $_SESSION["user"]["ID"]) > 0 ? "heart_20_filled" : "heart_20_regular"); else echo "heart_20_regular"  ?>.svg"></a><p id="like<?php echo $article["ID"]?>" style='display: inline-block; margin: 0 0 0 0.5em;'><?php echo count(getArticleLikes($db, $article["ID"]))?></p>
+        <?php if (isset($_SESSION["user"])) {
+            if ($_SESSION["user"]["ID"] == $article["userID"]) { ?>
+                <fluent-hyperlink style="margin-left: 1em; padding: 0.1em 1.5em 0 0;"><img class="fluent-icon" style="position: absolute; margin-top: 2px;" src="https://cdn.spej.eu/fwf/icons/edit_20_regular.svg"></img></fluent-hyperlink>
+                <fluent-hyperlink style="margin-left: 1em; padding: 0.1em 1.5em 0 0;" onclick="ShowContentDialog('delete-content-dialog-user<?php echo $article['ID']?>');"><img class="fluent-icon" style="position: absolute; margin-top: 2px;" src="https://cdn.spej.eu/fwf/icons/delete_20_regular.svg"></img></fluent-hyperlink>
+            <?php } else if ($_SESSION["user"]["admin"]) { ?>
+                <fluent-hyperlink style="margin-left: 1em; padding: 0.1em 1.5em 0 0;"><img class="fluent-icon" style="position: absolute; margin-top: 2px;" src="https://cdn.spej.eu/fwf/icons/edit_20_regular.svg"></img></fluent-hyperlink>
+                <fluent-hyperlink style="margin-left: 1em; padding: 0.1em 1.5em 0 0;" onclick="ShowContentDialog('delete-content-dialog-user<?php echo $article['ID']?>');"><img class="fluent-icon" style="position: absolute; margin-top: 2px;" src="https://cdn.spej.eu/fwf/icons/delete_20_regular.svg"></img></fluent-hyperlink>
+        <?php }} ?>
+    </div>
+    <div id="content-user<?php echo $article["ID"]?>" style="margin-top: 2em;"></div>
+    <script type="text/javascript">
+        prepareContentForArticle(<?php echo $article["ID"]?>, '<?php echo str_replace(array("\n","\r","\r\n"),'\n',$article['content']) ?>');
+    </script>
+    <fluent-content-dialog id="delete-content-dialog-<?php echo $articleContainer ?><?php echo $article["ID"]?>">
+        <h4>Remove this article?</h4>
+        <p>You can't take this action back.</p>
+        <fluent-content-dialog-options>
+            <button onclick="removeArticle('<?php echo $article['ID']?>');" class="fluent-button-accent">Ok</button><button onclick="HideContentDialog('delete-content-dialog-user<?php echo $article['ID']?>');">Close</button>
+        </fluent-content-dialog-options>
+    </fluent-content-dialog>
+</fluent-border>

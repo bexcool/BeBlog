@@ -1,0 +1,103 @@
+<!-- 0. Main feed -->
+<fluent-page header="Main feed">
+    <p>Welcome to <strong>BeBlog</strong>! Here are some random articles...</p>
+    <script type="text/javascript">
+        getRandomArticles(10, "main-feed-articles");
+    </script>
+    <div id="main-feed-articles"></div>
+</fluent-page>
+<!-- 1. Articles -->
+<fluent-page>
+    <fluent-page.header>
+        <div style="display: flex; align-items: baseline;">
+            <h2>Articles</h2>
+            <div style="margin-left: 15em; margin-top: 3em; position: absolute; display: flex;">
+                <button style="margin-right: 1em;" onclick="refreshArticles(); document.getElementById('articles-loading').style.display = 'block';"><!--<fluent-icon icon="arrow_sync_circle_24_regular"></fluent-icon>-->Refresh</button>
+                <div id="articles-loading" style="display: none;">
+                    <fluent-progressring></fluent-progressring>
+                </div>
+            </div>
+        </div>
+    </fluent-page.header>
+    <div id="articles"></div>
+    <script type="text/javascript">
+        getLastArticles(10, 0);
+    </script>
+    <div style="display: flex; align-items: center; flex-direction: column; margin-right: 5em;">
+        <button style="flex: 0;" onclick="getLastArticles(10, document.getElementById('articles').children.length);" hyperlink>Load more...</button>
+    </div>
+</fluent-page>
+<!-- 2. About -->
+<fluent-page header="About">
+    <p>Created by Peter as ZWA project using <fluent-hyperlink href="https://resources.bexcool.eu/fluentwebframework/showcase/#button-attributes" target="_blank">Fluent Web Framework</fluent-hyperlink>, PHP and JS.</p><br><p>6/2022</p>
+</fluent-page>
+<!-- 3. My account -->
+<fluent-page header="My account">
+    <h4>Name</h4>
+    <p id="my-account-username"></p>
+    <h4>Created</h4>
+    <p id="my-account-created"></p>
+    <button onclick="signOut();">Sign out</button>
+</fluent-page>
+<!-- 4. Create article -->
+<fluent-page header="Create article">
+    <div style="margin-right: 5em;">
+        <input id="publish-title" style="width: 100%;" placeholder="Title" type="text" name="title" id="title" required>
+        <textarea id="publish-content" name="content" placeholder="Article's content in Markdown" id="content" style="resize: none; width: 100%; min-height: 15em;"></textarea>
+        <button accent onclick="publishArticle(); ShowContentDialog('publish-content-dialog');">Publish</button>
+    </div>
+    <fluent-content-dialog id="publish-content-dialog">
+        <h4>Your article is publised</h4>
+        <fluent-content-dialog-options>
+            <button onclick="HideContentDialog('publish-content-dialog');">Close</button>
+        </fluent-content-dialog-options>
+    </fluent-content-dialog>
+</fluent-page>
+<!-- 5. My articles -->
+<fluent-page>
+    <fluent-page.header>
+        <div style="display: flex; align-items: baseline;">
+            <h2>My articles</h2>
+            <div style="margin-left: 15em; margin-top: 3em; position: absolute; display: flex;">
+                <button style="margin-right: 1em;" onclick="refreshMyArticles(); document.getElementById('my-articles-loading').style.display = 'block';"><!--<fluent-icon icon="arrow_sync_circle_24_regular"></fluent-icon>-->Refresh</button>
+                <div id="my-articles-loading" style="display: none;">
+                    <fluent-progressring></fluent-progressring>
+                </div>
+            </div>
+        </div>
+    </fluent-page.header>
+    <div id="my-articles"></div>
+</fluent-page>
+<!-- 6. Sign in -->
+<fluent-page header="Sign in">
+    <div>
+        <input placeholder="E-Mail" type="email" name="email" id="sign-in-email" required><br>
+        <input showpass_btn placeholder="Password" type="password" name="password" id="sign-in-password" required><br>
+        <button onclick="signIn();">Sign in</button>
+    </div>
+</fluent-page>
+<!-- 7. Sign up -->
+<fluent-page header="Sign up">
+    <div>
+        <input placeholder="Username" type="text" name="username" id="sign-up-username" required><br>
+        <input placeholder="E-Mail" type="email" name="email" id="sign-up-email" required><br>
+        <input showpass_btn placeholder="Password" type="password" name="password" id="sign-up-password" required><br>
+        <button onclick="signUp();">Sign up</button>
+    </div>
+</fluent-page>
+<!-- 8. User profile -->
+<fluent-page>
+    <fluent-page.header id="user-profile-header">
+    </fluent-page.header>
+    <h4>Created</h4><p id="user-profile-created"></p>
+    <h3>Articles</h3>
+    <div id="user-profile-articles"></div>
+</fluent-page>
+
+<fluent-content-dialog id="error-content-dialog">
+    <h4>An error occurred</h4>
+    <p>Try it again.</p>
+    <fluent-content-dialog-options>
+        <button onclick="HideContentDialog('error-content-dialog');">OK</button>
+    </fluent-content-dialog-options>
+</fluent-content-dialog>

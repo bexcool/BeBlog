@@ -9,10 +9,7 @@ function createAccount($db, $username, $email, $password) {
     $result = mysqli_query($db, $query);
 
     if ($result) {
-        logInAccount($db, $email, $password);
-    
-        header("Location: ../pages/index.php");
-        exit;
+        return logInAccount($db, $email, $password);
     }
     else {
         echo "Error: " . mysqli_error($db);
@@ -32,8 +29,7 @@ function logInAccount($db, $email, $password) {
 
     if ($user) {
         $_SESSION["user"] = $user;
-        header("Location: ../pages/index.php");
-        exit;
+        return $user;
     }
     else
     {
@@ -44,7 +40,6 @@ function logInAccount($db, $email, $password) {
 
 function logOutAccount() {
     unset($_SESSION["user"]);
-    header("Location: ../pages/index.php");
     exit;
 }
 

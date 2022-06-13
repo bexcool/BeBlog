@@ -7,9 +7,7 @@
 
     $article = loadArticle($db, $_POST["articleID"]);
     
-    if ($article != null) {
-        echo require("../controls/articleControl.phtml");
-    }
-
+    echo $article["content"];
+    
     exit;
 ?>

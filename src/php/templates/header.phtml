@@ -4,25 +4,25 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script type="text/javascript" src="https://resources.bexcool.eu/fluentwebframework/src/js/fluent_elements.min.js"></script>
+        <script type="text/javascript" src="../../js/article.js"></script>
+        <script type="text/javascript" src="../../js/user.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link rel="stylesheet" href="https://resources.bexcool.eu/fluentwebframework/src/style/fluent.min.css" type="text/css">
         <title><?= $title ?></title>
     </head>
     <body>
         <fluent-web-container>
             <fluent-menu main header="BeBlog">
-                    <fluent-menu-item id="menu-item-main" selectable onclick="window.open('../pages/index.php', '_self');" icon="emoji_hand_20_regular">Main feed</fluent-menu-item>
-                    <fluent-menu-item id="menu-item-articles" selectable onclick="window.open('../pages/articles.php', '_self');" icon="book_20_regular">Articles</fluent-menu-item>
-                    <fluent-menu-item id="menu-item-about" selectable onclick="window.open('../pages/about.php', '_self');" icon="info_12_regular" style="margin-bottom: 5em;">About</fluent-menu-item> 
-                    <?php if (isset($_SESSION["user"])) { ?>
-                    <fluent-menu-item id="menu-item-account" selectable onclick="window.open('../pages/account.php', '_self');" icon="person_12_regular">My account</fluent-menu-item> 
-                    <fluent-menu-item id="menu-item-create-article" selectable onclick="window.open('../pages/createArticle.php', '_self');" icon="book_add_20_regular">Create article</fluent-menu-item> 
-                    <fluent-menu-item id="menu-item-my-articles" selectable onclick="window.open('../pages/myArticles.php', '_self');" icon="book_contacts_20_regular">My articles</fluent-menu-item> 
-                    <?php } else { ?>
-                    <fluent-menu-item id="menu-item-sign-in" selectable onclick="window.open('../pages/sign_in.php', '_self');" icon="person_arrow_right_16_regular">Sign in</fluent-menu-item> 
-                    <fluent-menu-item id="menu-item-sign-up" selectable onclick="window.open('../pages/sign_up.php', '_self');" icon="person_add_16_regular">Sign up</fluent-menu-item> 
-                    <?php } ?>
+                    <fluent-menu-item id="menu-item-main" selectable onclick="SetActivePageIndex('page-switcher', 0); getRandomArticles(10);" icon="emoji_hand_20_regular" selected>Main feed</fluent-menu-item>
+                    <fluent-menu-item id="menu-item-articles" selectable onclick="SetActivePageIndex('page-switcher', 1); refreshArticles();" icon="book_20_regular">Articles</fluent-menu-item>
+                    <fluent-menu-item id="menu-item-about" selectable onclick="SetActivePageIndex('page-switcher', 2);" icon="info_12_regular" style="margin-bottom: 5em;">About</fluent-menu-item> 
+                    <fluent-menu-item id="menu-item-account" style="display: none;" selectable onclick="SetActivePageIndex('page-switcher', 3); initMyAccPage();" icon="person_12_regular">My account</fluent-menu-item> 
+                    <fluent-menu-item id="menu-item-create-article" style="display: none;" selectable onclick="SetActivePageIndex('page-switcher', 4);" icon="book_add_20_regular">Create article</fluent-menu-item> 
+                    <fluent-menu-item id="menu-item-my-articles" style="display: none;" selectable onclick="SetActivePageIndex('page-switcher', 5); refreshMyArticles();" icon="book_contacts_20_regular">My articles</fluent-menu-item> 
+                    <fluent-menu-item id="menu-item-sign-in" selectable onclick="SetActivePageIndex('page-switcher', 6);" icon="person_arrow_right_16_regular">Sign in</fluent-menu-item> 
+                    <fluent-menu-item id="menu-item-sign-up" selectable onclick="SetActivePageIndex('page-switcher', 7);" icon="person_add_16_regular">Sign up</fluent-menu-item> 
+                    <fluent-menu-item id="menu-item-user-profile" selectable onclick="SetActivePageIndex('page-switcher', 8);" style="display: none;">User profile placeholder</fluent-menu-item> 
                 </fluent-menu>
                 <fluent-main-content>
-                    <fluent-page-switcher main id="page-switcher">
+                    <fluent-page-switcher main id="page-switcher" active-page="0">

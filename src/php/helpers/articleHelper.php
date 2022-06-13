@@ -1,9 +1,10 @@
 <?php 
-function loadLastArticles($db, $amount) {
+function loadLastArticles($db, $amount, $offset = 0) {
     $query = 
     "   SELECT *
         FROM articles
         ORDER BY id DESC LIMIT $amount
+        OFFSET $offset;
     ";
 
     $result = mysqli_query($db, $query);
@@ -25,10 +26,13 @@ function loadArticle($db, $ID) {
     $result = mysqli_query($db, $query);
 
     if ($result) {
-        $article = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
-    }
+        $article = mysqli_fetch_array($result, MYSQLI_ASSOC);
     
-    return $article;
+        return $article;
+    }
+    else {
+        return null;
+    }
 }
 
 function loadArticlesFromUser($db, $userID) {
@@ -46,6 +50,68 @@ function loadArticlesFromUser($db, $userID) {
     }
     
     return $articles;
+}
+
+function loadArticleFromUser($db, $userID, $ID) {
+    $query = 
+    "   SELECT *
+        FROM articles
+        WHERE userID = $userID AND id = $ID
+    ";
+
+    $result = mysqli_query($db, $query);
+
+    if ($result) {
+        $article = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    }
+    
+    return $article;
+}
+
+function loadAllArticles($db) {
+    $query = 
+    "   SELECT *
+        FROM articles
+        ORDER BY id DESC
+    ";
+
+    $result = mysqli_query($db, $query);
+
+    if ($result) {
+        $articles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+    
+    return $articles;
+}
+
+function loadRandomArticles($db, $amount) {
+    $query = 
+    "   SELECT *
+        FROM articles
+        ORDER BY RAND()
+        LIMIT $amount
+    ";
+
+    $result = mysqli_query($db, $query);
+
+    if ($result) {
+        $articles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+    
+    return $articles;
+}
+
+function editArticle($db, $article) {
+    $query = 
+    "   UPDATE articles
+        SET title = '{$article["title"]}',
+            content = '{$article["content"]}'
+        WHERE id = '{$article["id"]}'
+    ";
+
+    $result = mysqli_query($db, $query);
+
+    return $result;
 }
 
 function createArticle($db, $article) {
