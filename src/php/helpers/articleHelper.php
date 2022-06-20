@@ -1,5 +1,7 @@
 <?php 
 function loadLastArticles($db, $amount, $offset = 0) {
+    // Připraví dotaz pro získání určitého počtu posledních článků
+    // Možné je použít offset pro získání dalších článků bez načítání celého obsahu.
     $query = 
     "   SELECT *
         FROM articles
@@ -7,12 +9,15 @@ function loadLastArticles($db, $amount, $offset = 0) {
         OFFSET $offset;
     ";
 
+    // Odešle dotaz
     $result = mysqli_query($db, $query);
 
+    // Pokud byl dotaz úspšný, tak vytvoří pole článků
     if ($result) {
         $articles = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
     
+    // Vrací pole článků
     return $articles;
 }
 

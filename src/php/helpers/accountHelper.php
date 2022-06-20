@@ -1,6 +1,12 @@
 <?php 
 
 function createAccount($db, $username, $email, $password) {
+    $queryMatch = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
+
+    $result = mysqli_query($db, $queryMatch);
+
+    if ($result) return "exists";
+
     $query = 
     "   INSERT INTO users (username, email, password)
         VALUES ('{$username}', '{$email}', '" . sha1($password) . "')

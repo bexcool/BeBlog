@@ -7,6 +7,8 @@
 
     $article = loadArticle($db, $_POST["articleID"]);
     
+    $articleContainer = $_POST["whereID"];
+
     if ($article != null) {
         echo require("../controls/articleControl.phtml");
     }

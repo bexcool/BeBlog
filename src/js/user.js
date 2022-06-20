@@ -46,6 +46,7 @@ function signUp() {
     }, function (data) {
         if (data == "") {
             ShowContentDialog("error-content-dialog");
+            document.getElementById("menu-item-sign-up").click();
             return;
         }
 
@@ -53,6 +54,7 @@ function signUp() {
 
         if (dataJSON == null) {
             ShowContentDialog("error-content-dialog");
+            document.getElementById("menu-item-sign-up").click();
             return;
         }
 

@@ -42,6 +42,14 @@
 <!-- 4. Create article -->
 <fluent-page header="Create article">
     <div style="margin-right: 5em;">
+        <p>Upload content from your file or write your article from scratch.</p>
+        <div>
+            <form style="border: none; margin: 0; padding: 0; display: inline;">
+                <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                <input type="file" id="publish-file-content" name="file-content" accept=".txt">
+            </form>
+            <button onclick="loadContentFromFile();">Load</button>
+        </div>
         <input id="publish-title" style="width: 100%;" placeholder="Title" type="text" name="title" id="title" required>
         <textarea id="publish-content" name="content" placeholder="Article's content in Markdown" id="content" style="resize: none; width: 100%; min-height: 15em;"></textarea>
         <button accent onclick="publishArticle(); ShowContentDialog('publish-content-dialog');">Publish</button>
